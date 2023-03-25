@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.create-button,
+.join-button {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background-color: #3498db;
+  color: white;
+  width: 300px;
+  height: 60px;
+}
+
+.create-button:hover,
+.join-button:hover {
+  background-color: #2980db;
+}

@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import react, {useState} from "react";
+import "./App.css";
 
-function App() {
+
+ function App() {
+  const [showForm, setSHowForm] = useState(false);
+   function handleCreateClick () {
+    setSHowForm(true);
+   }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-container">
+      <h1 className="app-title"> Welcome to cure boredom App</h1>
+      {showForm ? (
+        <div className="form-container">
+          <input type= "text" placeholder="Enter your Name" />
+          <button> Create Room</button>
+        </div>
+      ):(
+        <div className="button-container">
+        <button className="create-button" onClick={handleCreateClick}> Create Room</button>
+        <button className="join-button">Join Room</button>
+      </div>
+      )}  
     </div>
   );
-}
+ }
 
-export default App;
+ export default App;
