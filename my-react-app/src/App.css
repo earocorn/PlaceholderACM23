@@ -36,3 +36,81 @@
     transform: rotate(360deg);
   }
 }
+
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-button,
+.join-button {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background-color: #3498db;
+  color: white;
+  width: 300px;
+  height: 60px;
+}
+
+.create-button:hover,
+.join-button:hover {
+  background-color: #2980db;
+}
+
+.create-button2,
+.join-button2 {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  width: 300px;
+  height: 60px;
+}
+
+.create-button2:hover,
+.join-button2:hover {
+  background-color: green;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px ;
+}
+.form-container input[type = "text"] {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
