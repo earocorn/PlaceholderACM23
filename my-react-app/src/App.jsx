@@ -28,14 +28,14 @@ import "./App.css";
       {isFormVisible && (
         <div className="form-container">
           <input type= "text" placeholder="Enter your Name" value={spaceName} onChange = {handleInputChange}/>
-          <button> Create Room</button>
+          <button className="create-button2"> GO </button>
         </div>
       )}
       {isFormVisible2 && (
         <div className="form-container">
           <input type= "text" placeholder="Enter your Name" value={spaceName} onChange = {handleInputChange}/>
           <input type= "text" placeholder="Enter Room ID" value={spaceName} onChange = {handleInputChange}/>
-          <button> Join Room</button>
+          <div className="button-container"> <button className="join-button2"> GO</button> </div>
         </div>
       )}   
     </div>
