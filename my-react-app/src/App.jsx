@@ -27,7 +27,7 @@ function App() {
   let [activityInput, setActivityInput] = useState("")
   
   //console.log(activityInput)
-
+  //test
 
   function addActivity(activity) {
     setActivities([...activities, activity])
