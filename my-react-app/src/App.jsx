@@ -58,14 +58,7 @@ function App() {
 
   return (
     <div>
-      <h1>"TEST HEADER"???</h1>
-      <label>TESTING LABEL
-        <input onChange={(e) => setActivityInput(e.target.value)}/>
-      </label>
-      <button onClick={() => addActivity(activityInput)}>Add Activity</button>
-      <button onClick={() => removeActivity(activityInput)}>Remove Activity</button>
-      <button onClick={() => listActivities()}>List Activities</button>
-      {console.log(activities)}
+      
     </div>
   )
 }
