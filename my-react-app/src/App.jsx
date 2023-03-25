@@ -22,9 +22,7 @@ function Room(props) {
   function addToList(item) {
     // Copy the array and add the item to the end
     setItems([...items, item]);
-    setSegments([...segments, item]);
   }
-  console.log(segments)
   return (
     <div>
       <label>
@@ -36,9 +34,21 @@ function Room(props) {
         return <h2>{item}</h2>
       })}
       <h1>Your next event is:</h1>
-      {output.map((output) => {
-        return <h1>{output}</h1>
-      })}
+      <h1>{output}</h1>
+      <WheelComponent
+          key={Math.random()}
+          segments={items}
+          segColors={segColors}
+          onFinished={(winner) => onFinished(winner)}
+          primaryColor="black"
+          contrastColor="white"
+          buttonText="Spin"
+          isOnlyOnce={false}
+          size={190}
+          upDuration={500}
+          downDuration={600}
+          fontFamily="Arial"
+        />
     </div>
   )
 }
