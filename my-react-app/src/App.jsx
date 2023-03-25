@@ -19,40 +19,29 @@ function Room(props) {
   const onFinished = (winner) => {
     console.log(winner);
   };
-  
   function addToList(item) {
     // Copy the array and add the item to the end
     setItems([...items, item]);
+    setSegments([...segments, item]);
   }
-
+  console.log(segments)
   return (
-    <><div>
+    <div>
       <label>
         Enter an item <input onChange={(e) => setOurInput(e.target.value)} />
       </label>
-      <button onClick={() => addToList(ourInput)}>Add to list</button>
-      <button onClick={() => setOutput}>Spin!</button>
+      <button onClick = {() => addToList(ourInput)}>Add to list</button>
+      <button onClick = {() => setOutput}>Spin!</button>
       {items.map((item) => {
-        return <h2>{item}</h2>;
+        return <h2>{item}</h2>
       })}
       <h1>Your next event is:</h1>
-      <h1>{output}</h1>
-    </div><WheelComponent
-        key={Math.random()}
-        segments={items}
-        segColors={segColors}
-        onFinished={(winner) => onFinished(winner)}
-        primaryColor="black"
-        contrastColor="white"
-        buttonText="Spin"
-        isOnlyOnce={false}
-        size={190}
-        upDuration={500}
-        downDuration={600}
-        fontFamily="Arial" /></>
+      {output.map((output) => {
+        return <h1>{output}</h1>
+      })}
+    </div>
   )
 }
-
 
 function App() {
   const [hasClicked, setHasClicked] = useState(false);
