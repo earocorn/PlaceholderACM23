@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import "./App.css";
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
@@ -7,8 +7,8 @@ import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-import WheelComponent from "react-wheel-of-prizes";
-
+import WheelComponent from "./WheelComponent";
+//import "react-wheel-of-prizes/dist/index.css";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -25,17 +25,41 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app)
 
-// import "react-wheel-of-prizes/dist/index.css";
+ //import "react-wheel-of-prizes/dist/index.css";
+
+ function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height
+  };
+}
+
+function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+}
 
 function Room(props) {
   let [items, setItems] = useState([]);
   let [ourInput, setOurInput] = useState("");
   let [output, setOutput] = useState("");
+  const dimensions = useWindowDimensions();
 
+  console.log(dimensions);
   if (props.userName === "") {
     console.log("No empty usernames")
   }
-
   const segColors = ["#EE4040", "#F0CF50", "#815CD1", "#3DA5E0", "#34A24F"];
   const onFinished = (winner) => {
     console.log(winner);
@@ -46,6 +70,7 @@ function Room(props) {
   }
   return (
     <div>
+
       <label>
         Enter an item <input onChange={(e) => setOurInput(e.target.value)} />
       </label>
@@ -56,6 +81,7 @@ function Room(props) {
       })}
       <h1>Your next event is:</h1>
       <h1>{output}</h1>
+      <div class="wheelcontainer">
       <WheelComponent
           key={Math.random()}
           segments={items}
@@ -64,12 +90,12 @@ function Room(props) {
           primaryColor="black"
           contrastColor="white"
           buttonText="Spin"
+          size={Math.min(300, dimensions.width / 3)}
           isOnlyOnce={false}
-          size={190}
           upDuration={500}
           downDuration={600}
           fontFamily="Arial"
-        />
+        /></div>
     </div>
   )
 }
@@ -132,6 +158,7 @@ function App() {
     //   )}
     // </div>
     <Room />
+    
   );
  }
 
