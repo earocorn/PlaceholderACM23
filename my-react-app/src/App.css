@@ -38,28 +38,38 @@
 }
 
 .app-container {
-  height: 100vh;
+  object-fit: scale-down;
+  height: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   justify-content: center;
   align-items: center;
 }
 
 .app-title {
+  height: 90%;
+  width: 90%;
   font-size: 3rem;
   margin-bottom: 2rem;
   text-align: center;
+  padding-left: 10;
+  padding-right: 10;
 }
 .button-container {
+  height: 90%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  padding-left: 10;
+  padding-right: 10;
 }
 
 .create-button,
 .join-button {
+  display: flex;
   padding: 1rem 2rem;
   font-size: 1.5rem;
   border: none;
@@ -68,8 +78,13 @@
   cursor: pointer;
   background-color: #3498db;
   color: white;
-  width: 300px;
+  aspect-ratio: 1;
+  text-align: center;
+  width: 100%;
+  max-width: 300px;
   height: 60px;
+  
+
 }
 
 .create-button:hover,
@@ -87,7 +102,10 @@
   cursor: pointer;
   background-color: red;
   color: white;
-  width: 300px;
+
+  aspect-ratio: 1;
+  width: 100%;
+  max-width: 300px;
   height: 60px;
 }
 

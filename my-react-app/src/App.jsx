@@ -1,11 +1,18 @@
 import {useState} from "react";
 import "./App.css";
+<<<<<<< HEAD
+=======
+// import reactLogo from './assets/react.svg'
+// import viteLogo from '/vite.svg'
+>>>>>>> origin/Dev0
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDoc, doc, setDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+
+import WheelComponent from "react-wheel-of-prizes";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -21,13 +28,92 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+<<<<<<< HEAD
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
+=======
+const analytics = getAnalytics(app)
+>>>>>>> origin/Dev0
 
+// import "react-wheel-of-prizes/dist/index.css";
+
+
+//////////////////////////////////////////////////////
+/////////////// WEBSITE CODE /////////////////////////
+//////////////////////////////////////////////////////
+
+
+/**
+ * Room(props)
+ * builds the room page.
+ * Called by App()
+ * 
+ * @param {userName} props 
+ * @returns 
+ */
+function Room(props) {
+  let [items, setItems] = useState([]);
+  let [ourInput, setOurInput] = useState("");
+  let [output, setOutput] = useState("");
+
+
+
+  if (props.userName === "") {
+    console.log("No empty usernames")
+  }
+
+  const segColors = ["#EE4040", "#F0CF50", "#815CD1", "#3DA5E0", "#34A24F"];
+  const onFinished = (winner) => {
+    console.log(winner);
+  };
+  function addToList(item) {
+    // Copy the array and add the item to the end
+    setItems([...items, item]);
+  }
+
+  return (
+    <div>
+      <label>
+        Enter an item <input onChange={(e) => setOurInput(e.target.value)} />
+      </label>
+      <button onClick = {() => addToList(ourInput)}>Add to list</button>
+      <button onClick = {() => setOutput}>Spin!</button>
+      {items.map((item) => {
+        return <h2>{item}</h2>
+      })}
+      <h1>Room Code: </h1>
+      <h1>{output}</h1>
+      <WheelComponent
+          key={Math.random()}
+          segments={items}
+          segColors={segColors}
+          onFinished={(winner) => onFinished(winner)}
+          primaryColor="black"
+          contrastColor="white"
+          buttonText="Spin"
+          isOnlyOnce={false}
+          size={190}
+          upDuration={500}
+          downDuration={600}
+          fontFamily="Arial"
+        />
+    </div>
+  )
+}
+
+
+
+/**
+ * App()
+ * builds the landing page and handles showing and hiding the room and landing page
+ * 
+ * @returns the website landing page
+ */
 function App() {
 
   let [activities, setActivities] = useState([])
   let [activityInput, setActivityInput] = useState("")
+<<<<<<< HEAD
   let [createErrorMessage, setCreateErrorMessage] = useState("")
   let [joinErrorMessage, setJoinErrorMessage] = useState("")
   let [roomID, setRoomID] = useState(Math.floor(Math.random()*90000) + 10000)
@@ -38,6 +124,10 @@ function App() {
   const roomInputError = "Please enter 5 digit room ID."
   const roomNotExistsError = "Room does not exist."
   const roomExistsError = "Room already exists."
+=======
+
+  let [showRoom, setShowRoom]= useState(false);
+>>>>>>> origin/Dev0
   
   //console.log(activityInput)
   //test
@@ -151,8 +241,15 @@ function App() {
   } 
 */
 
+
+
+  // function buildRoom() {
+  //   return <Room />
+  // }
+
   return (
     <div className="app-container">
+<<<<<<< HEAD
       <h1 className="app-title"> Welcome to cure boredom App</h1>
       <div className="button-container">
         <button className="create-button" onClick={handleCreateClick}> Create Room</button>
@@ -173,8 +270,33 @@ function App() {
           <div className="button-container"> <button className="join-button2" onClick={joinRoomClick}> GO</button> </div>
         </div>
       )}   
+=======
+      {!showRoom && <>
+        <h1 className="app-title"> Welcome to cure boredom App</h1>
+        <div className="button-container">
+          <button className="create-button" onClick={handleCreateClick}> Create Room</button>
+          <button className="join-button" onClick={handleCreateClick2}>Join Room</button>
+        </div>
+        {isFormVisible && (
+          <div className="form-container">
+            <input type="text" placeholder="Enter your Name" value={spaceName} onChange={handleInputChange} />
+            <button onClick = {() => setShowRoom(!showRoom)} className="create-button2"> GO </button>
+          </div>
+        )}
+        {isFormVisible2 && (
+          <div className="form-container">
+            <input type="text" placeholder="Enter your Name" onChange={handleInputChange} />
+            <input type="text" placeholder="Enter Room ID" onChange={handleInputChange} />
+            <div className="button-container"> <button className="join-button2"> GO</button> </div>
+          </div>
+        )}
+      </>}
+      {
+        showRoom && <Room userName = "name" /> // short circuit boolean to show room. Will not call Room 
+      }
+>>>>>>> origin/Dev0
     </div>
   );
  }
 
- export default App;
+export default App;
