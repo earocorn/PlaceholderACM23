@@ -78,6 +78,8 @@ function App() {
 
   let [activities, setActivities] = useState([])
   let [activityInput, setActivityInput] = useState("")
+
+  let [showRoom, setShowRoom]= useState(false);
   
   //console.log(activityInput)
   //test
@@ -106,32 +108,35 @@ function App() {
     )
   } 
 
+
+
   // function buildRoom() {
   //   return <Room />
   // }
 
   return (
-    // <div className="app-container">
-    //   <h1 className="app-title"> Welcome to cure boredom App</h1>
-    //   <div className="button-container">
-    //     <button className="create-button" onClick={handleCreateClick}> Create Room</button>
-    //     <button className="join-button" onClick={handleCreateClick2}>Join Room</button>
-    //   </div>
-    //   {isFormVisible && (
-    //     <div className="form-container">
-    //       <input type="text" placeholder="Enter your Name" value={spaceName} onChange={handleInputChange} />
-    //       <button onClick={() => <Room />} className="create-button2"> GO </button>
-    //     </div>
-    //   )}
-    //   {isFormVisible2 && (
-    //     <div className="form-container">
-    //       <input type="text" placeholder="Enter your Name" onChange={handleInputChange} />
-    //       <input type="text" placeholder="Enter Room ID" onChange={handleInputChange} />
-    //       <div className="button-container"> <button className="join-button2"> GO</button> </div>
-    //     </div>
-    //   )}
-    // </div>
-    <Room />
+    <div className="app-container">
+      <h1 className="app-title"> Welcome to cure boredom App</h1>
+      <div className="button-container">
+        <button className="create-button" onClick={handleCreateClick}> Create Room</button>
+        <button className="join-button" onClick={handleCreateClick2}>Join Room</button>
+      </div>
+      {isFormVisible && (
+        <div className="form-container">
+          <input type="text" placeholder="Enter your Name" value={spaceName} onChange={handleInputChange} />
+          <button onClick={() => setShowRoom(!showRoom)} className="create-button2"> GO </button>
+        </div>
+      )}
+      {isFormVisible2 && (
+        <div className="form-container">
+          <input type="text" placeholder="Enter your Name" onChange={handleInputChange} />
+          <input type="text" placeholder="Enter Room ID" onChange={handleInputChange} />
+          <div className="button-container"> <button className="join-button2"> GO</button> </div>
+        </div>
+      )}
+      {showRoom && <Room />}
+    </div>
+      // <Room />
   );
  }
 
