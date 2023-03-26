@@ -50,11 +50,24 @@ function useWindowDimensions() {
   return windowDimensions;
 }
 
+
+//////////////////////////////////////////////////////
+/////////////// WEBSITE CODE /////////////////////////
+//////////////////////////////////////////////////////
+
+
+/**
+ * Room(props)
+ * builds the room page.
+ * Called by App()
+ * 
+ * @param {userName} props 
+ * @returns 
+ */
 function Room(props) {
   let [items, setItems] = useState([]);
   let [ourInput, setOurInput] = useState("");
   let [output, setOutput] = useState("");
-  const dimensions = useWindowDimensions();
 
   console.log(dimensions);
   if (props.userName === "") {
@@ -68,6 +81,7 @@ function Room(props) {
     // Copy the array and add the item to the end
     setItems([...items, item]);
   }
+
   return (
     <div>
 
@@ -79,7 +93,7 @@ function Room(props) {
       {items.map((item) => {
         return <h2>{item}</h2>
       })}
-      <h1>Your next event is:</h1>
+      <h1>Room Code: </h1>
       <h1>{output}</h1>
       <div class="wheelcontainer">
       <WheelComponent
@@ -100,10 +114,20 @@ function Room(props) {
   )
 }
 
+
+
+/**
+ * App()
+ * builds the landing page and handles showing and hiding the room and landing page
+ * 
+ * @returns the website landing page
+ */
 function App() {
 
   let [activities, setActivities] = useState([])
   let [activityInput, setActivityInput] = useState("")
+
+  let [showRoom, setShowRoom]= useState(false);
   
   //console.log(activityInput)
   //test
@@ -132,6 +156,8 @@ function App() {
     )
   } 
 
+
+
   // function buildRoom() {
   //   return <Room />
   // }
@@ -158,7 +184,6 @@ function App() {
     //   )}
     // </div>
     <Room />
-    
   );
  }
 
