@@ -1,9 +1,9 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import "./App.css";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDoc, doc, setDoc } from "firebase/firestore";
+import { collection, getDoc, doc, setDoc, updateDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -45,10 +45,15 @@ const db = getFirestore(app);
  * @param {userName, roomID} props 
  * @returns 
  */
-function Room(props) {
-  let [items, setItems] = useState([]);
+ function Room(props) {
+  let [items, setItems] = useState([""]);
   let [ourInput, setOurInput] = useState("");
   let [output, setOutput] = useState("");
+  let [count, setCount] = useState(1);
+
+  useEffect(() => {
+    getItems();
+  }, []);
 
   if (props.userName === "") {
     console.log("No empty usernames")
@@ -61,10 +66,61 @@ function Room(props) {
   const onFinished = (winner) => {
     console.log(winner);
   };
-  function addToList(item) {
-    // Copy the array and add the item to the end
-    setItems([...items, item]);
+
+  async function getItems() {
+    const activitiesDoc = await getDoc(doc(db, "rooms/"+props.roomID+"/wheelActivities", 'activities'));
+    const activitiesData = activitiesDoc.data();
+    console.log(JSON.stringify(activitiesData))
+    const activitiesList = activitiesData["list"];
+    setItems(activitiesList);
   }
+
+  async function addToList(item) {
+    // Copy the array and add the item to the end
+    if(count>6) {
+      console.log("TOO MANY ITEMS O_O")
+      return
+    }
+    
+    const activitiesDoc = await getDoc(doc(db, "rooms/"+props.roomID+"/wheelActivities", 'activities'));
+    const activitiesData = activitiesDoc.data();
+    console.log(JSON.stringify(activitiesData))
+    const activitiesList = activitiesData["list"];
+    activitiesList.push(item);
+    console.log(activitiesList);
+    await updateDoc(activitiesDoc.ref, { list: activitiesList })
+    setItems(activitiesList);
+    // switch (count) {
+    //   case 1:
+    //     await updateDoc(activitiesDoc, { a1: item })
+    //     setCount(count+1)
+    //     break;
+    //   case 2:
+    //     await updateDoc(activitiesDoc, { a2: item })
+    //     setCount(count+1)
+    //     break;
+    //   case 3:
+    //     await updateDoc(activitiesDoc, { a3: item })
+    //     setCount(count+1)
+    //     break;
+    //   case 4:
+    //     await updateDoc(activitiesDoc, { a4: item })
+    //     setCount(count+1)
+    //     break;
+    //   case 5:
+    //     await updateDoc(activitiesDoc, { a5: item })
+    //     setCount(count+1)
+    //     break;
+    //   case 6:
+    //     await updateDoc(activitiesDoc, { a6: item })
+    //     setCount(count+1)
+    //     break;
+    //   default:
+    //     console.log("ACTIVITIES FULL!")
+    //     break;
+    // }
+  }
+
 
   return (
     <div>
@@ -174,6 +230,7 @@ function App() {
     await setDoc(doc(db, 'rooms/'+roomID.toString()+'/users', name), {
       name: name
     });
+    setRoomCode(roomID)
     setShowRoom(!showRoom)
     //TODO:
     //handle join room event
@@ -207,17 +264,13 @@ function App() {
     });
     //add template of 6 activities in the roomID documeht in wheelactivities/activities document
     await setDoc(doc(db, 'rooms/'+roomID.toString()+'/wheelActivities', "activities"), {
-      a1: "",
-      a2: "",
-      a3: "",
-      a4: "",
-      a5: "",
-      a6: ""
+      list: []
     });
 
     //TODO:
     //include code to go to room webpage of roomID
     console.log(name + " has successfully created room " + roomID)
+    setRoomCode(roomID)
     setShowRoom(!showRoom)
   }
 
