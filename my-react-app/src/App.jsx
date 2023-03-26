@@ -1,10 +1,5 @@
 import {useState} from "react";
 import "./App.css";
-<<<<<<< HEAD
-=======
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
->>>>>>> origin/Dev0
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
@@ -28,12 +23,11 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-<<<<<<< HEAD
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
-=======
 const analytics = getAnalytics(app)
->>>>>>> origin/Dev0
+const db = getFirestore(app);
+
+//let [roomName, setRoomName] = useState("")
+//let [roomCode, setRoomCode] = useState()
 
 // import "react-wheel-of-prizes/dist/index.css";
 
@@ -48,7 +42,7 @@ const analytics = getAnalytics(app)
  * builds the room page.
  * Called by App()
  * 
- * @param {userName} props 
+ * @param {userName, roomID} props 
  * @returns 
  */
 function Room(props) {
@@ -56,10 +50,11 @@ function Room(props) {
   let [ourInput, setOurInput] = useState("");
   let [output, setOutput] = useState("");
 
-
-
   if (props.userName === "") {
     console.log("No empty usernames")
+  }
+  if(props.roomID.length > 5 || props.roomID.length < 5) {
+    console.log("Invalid room ID")
   }
 
   const segColors = ["#EE4040", "#F0CF50", "#815CD1", "#3DA5E0", "#34A24F"];
@@ -81,7 +76,7 @@ function Room(props) {
       {items.map((item) => {
         return <h2>{item}</h2>
       })}
-      <h1>Room Code: </h1>
+      <h1>Room Code: {props.roomID}</h1>
       <h1>{output}</h1>
       <WheelComponent
           key={Math.random()}
@@ -103,20 +98,16 @@ function Room(props) {
 
 
 
-/**
- * App()
- * builds the landing page and handles showing and hiding the room and landing page
- * 
- * @returns the website landing page
- */
 function App() {
 
   let [activities, setActivities] = useState([])
   let [activityInput, setActivityInput] = useState("")
-<<<<<<< HEAD
+
+  let [showRoom, setShowRoom]= useState(false);
   let [createErrorMessage, setCreateErrorMessage] = useState("")
   let [joinErrorMessage, setJoinErrorMessage] = useState("")
   let [roomID, setRoomID] = useState(Math.floor(Math.random()*90000) + 10000)
+  let [roomCode, setRoomCode] = useState(0)
 
   const startTime = Date.now()
 
@@ -124,10 +115,6 @@ function App() {
   const roomInputError = "Please enter 5 digit room ID."
   const roomNotExistsError = "Room does not exist."
   const roomExistsError = "Room already exists."
-=======
-
-  let [showRoom, setShowRoom]= useState(false);
->>>>>>> origin/Dev0
   
   //console.log(activityInput)
   //test
@@ -187,6 +174,7 @@ function App() {
     await setDoc(doc(db, 'rooms/'+roomID.toString()+'/users', name), {
       name: name
     });
+    setShowRoom(!showRoom)
     //TODO:
     //handle join room event
     //include code to go to room webpage of roomID
@@ -226,9 +214,11 @@ function App() {
       a5: "",
       a6: ""
     });
+
     //TODO:
     //include code to go to room webpage of roomID
     console.log(name + " has successfully created room " + roomID)
+    setShowRoom(!showRoom)
   }
 
 /*
@@ -241,15 +231,9 @@ function App() {
   } 
 */
 
-
-
-  // function buildRoom() {
-  //   return <Room />
-  // }
-
   return (
     <div className="app-container">
-<<<<<<< HEAD
+      {!showRoom && <>
       <h1 className="app-title"> Welcome to cure boredom App</h1>
       <div className="button-container">
         <button className="create-button" onClick={handleCreateClick}> Create Room</button>
@@ -269,34 +253,13 @@ function App() {
           <input type= "text" placeholder="Enter Room ID" value={roomID} onChange = {handleInputIDChange}/>
           <div className="button-container"> <button className="join-button2" onClick={joinRoomClick}> GO</button> </div>
         </div>
-      )}   
-=======
-      {!showRoom && <>
-        <h1 className="app-title"> Welcome to cure boredom App</h1>
-        <div className="button-container">
-          <button className="create-button" onClick={handleCreateClick}> Create Room</button>
-          <button className="join-button" onClick={handleCreateClick2}>Join Room</button>
-        </div>
-        {isFormVisible && (
-          <div className="form-container">
-            <input type="text" placeholder="Enter your Name" value={spaceName} onChange={handleInputChange} />
-            <button onClick = {() => setShowRoom(!showRoom)} className="create-button2"> GO </button>
-          </div>
-        )}
-        {isFormVisible2 && (
-          <div className="form-container">
-            <input type="text" placeholder="Enter your Name" onChange={handleInputChange} />
-            <input type="text" placeholder="Enter Room ID" onChange={handleInputChange} />
-            <div className="button-container"> <button className="join-button2"> GO</button> </div>
-          </div>
-        )}
+      )}  
       </>}
       {
-        showRoom && <Room userName = "name" /> // short circuit boolean to show room. Will not call Room 
-      }
->>>>>>> origin/Dev0
+        showRoom && <Room roomID={roomCode}/>
+      } 
     </div>
   );
  }
 
-export default App;
+ export default App;
