@@ -44,6 +44,7 @@ function Room(props) {
     // Copy the array and add the item to the end
     setItems([...items, item]);
   }
+
   return (
     <div>
       <label>
@@ -116,27 +117,28 @@ function App() {
 
   return (
     <div className="app-container">
-      <h1 className="app-title"> Welcome to cure boredom App</h1>
-      <div className="button-container">
-        <button className="create-button" onClick={handleCreateClick}> Create Room</button>
-        <button className="join-button" onClick={handleCreateClick2}>Join Room</button>
-      </div>
-      {isFormVisible && (
-        <div className="form-container">
-          <input type="text" placeholder="Enter your Name" value={spaceName} onChange={handleInputChange} />
-          <button onClick={() => setShowRoom(!showRoom)} className="create-button2"> GO </button>
+      {!showRoom && <>
+        <h1 className="app-title"> Welcome to cure boredom App</h1>
+        <div className="button-container">
+          <button className="create-button" onClick={handleCreateClick}> Create Room</button>
+          <button className="join-button" onClick={handleCreateClick2}>Join Room</button>
         </div>
-      )}
-      {isFormVisible2 && (
-        <div className="form-container">
-          <input type="text" placeholder="Enter your Name" onChange={handleInputChange} />
-          <input type="text" placeholder="Enter Room ID" onChange={handleInputChange} />
-          <div className="button-container"> <button className="join-button2"> GO</button> </div>
-        </div>
-      )}
+        {isFormVisible && (
+          <div className="form-container">
+            <input type="text" placeholder="Enter your Name" value={spaceName} onChange={handleInputChange} />
+            <button onClick = {() => setShowRoom(!showRoom)} className="create-button2"> GO </button>
+          </div>
+        )}
+        {isFormVisible2 && (
+          <div className="form-container">
+            <input type="text" placeholder="Enter your Name" onChange={handleInputChange} />
+            <input type="text" placeholder="Enter Room ID" onChange={handleInputChange} />
+            <div className="button-container"> <button className="join-button2"> GO</button> </div>
+          </div>
+        )}
+      </>}
       {showRoom && <Room />}
     </div>
-      // <Room />
   );
  }
 
