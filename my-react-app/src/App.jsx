@@ -7,6 +7,8 @@ import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+import WheelComponent from "react-wheel-of-prizes";
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -23,7 +25,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app)
 
-import WheelComponent from "react-wheel-of-prizes";
 // import "react-wheel-of-prizes/dist/index.css";
 
 function Room(props) {
@@ -105,27 +106,32 @@ function App() {
     )
   } 
 
+  // function buildRoom() {
+  //   return <Room />
+  // }
+
   return (
-    <div className="app-container">
-      <h1 className="app-title"> Welcome to cure boredom App</h1>
-      <div className="button-container">
-        <button className="create-button" onClick={handleCreateClick}> Create Room</button>
-        <button className="join-button" onClick={handleCreateClick2}>Join Room</button>
-      </div>
-      {isFormVisible && (
-        <div className="form-container">
-          <input type= "text" placeholder="Enter your Name" value={spaceName} onChange = {handleInputChange}/>
-          <button className="create-button2"> GO </button>
-        </div>
-      )}
-      {isFormVisible2 && (
-        <div className="form-container">
-          <input type= "text" placeholder="Enter your Name"  onChange = {handleInputChange}/>
-          <input type= "text" placeholder="Enter Room ID"  onChange = {handleInputChange}/>
-          <div className="button-container"> <button className="join-button2"> GO</button> </div>
-        </div>
-      )}   
-    </div>
+    // <><div className="app-container">
+    //   <h1 className="app-title"> Welcome to cure boredom App</h1>
+    //   <div className="button-container">
+    //     <button className="create-button" onClick={handleCreateClick}> Create Room</button>
+    //     <button className="join-button" onClick={handleCreateClick2}>Join Room</button>
+    //   </div>
+    //   {isFormVisible && (
+    //     <div className="form-container">
+    //       <input type="text" placeholder="Enter your Name" value={spaceName} onChange={handleInputChange} />
+    //       <button onClick={() => <Room />} className="create-button2"> GO </button>
+    //     </div>
+    //   )}
+    //   {isFormVisible2 && (
+    //     <div className="form-container">
+    //       <input type="text" placeholder="Enter your Name" onChange={handleInputChange} />
+    //       <input type="text" placeholder="Enter Room ID" onChange={handleInputChange} />
+    //       <div className="button-container"> <button className="join-button2"> GO</button> </div>
+    //     </div>
+    //   )}
+    // </div>
+    <Room />
   );
  }
 
