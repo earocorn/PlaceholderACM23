@@ -111,7 +111,7 @@ function App() {
   // }
 
   return (
-    // <><div className="app-container">
+    // <div className="app-container">
     //   <h1 className="app-title"> Welcome to cure boredom App</h1>
     //   <div className="button-container">
     //     <button className="create-button" onClick={handleCreateClick}> Create Room</button>
