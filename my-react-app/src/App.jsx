@@ -3,7 +3,7 @@ import "./App.css";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs, getDoc, doc, setDoc } from "firebase/firestore";
+import { collection, getDoc, doc, setDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -34,8 +34,10 @@ function App() {
 
   const startTime = Date.now()
 
-  const inputError = "Please enter a name!"
-  const roomExistsError = "Room already exists!"
+  const inputError = "Incorrect name input."
+  const roomInputError = "Please enter 5 digit room ID."
+  const roomNotExistsError = "Room does not exist."
+  const roomExistsError = "Room already exists."
   
   //console.log(activityInput)
   //test
@@ -47,11 +49,13 @@ function App() {
   function handleCreateClick () {
     seIsFormVisible2(false);
     seIsFormVisible(true);
+    setRoomID(Math.floor(Math.random()*90000) + 10000)
   }
 
   function handleCreateClick2 () {
     seIsFormVisible(false);
     seIsFormVisible2(true);
+    setRoomID(Math.floor(Math.random()*90000) + 10000)
   }
 
   function handleJoinInputChange(event) {
@@ -71,13 +75,36 @@ function App() {
 
   async function joinRoomClick() {
     let name = joinSpaceName
+    let id = roomID
+    if(name.length === 0) {
+      setJoinErrorMessage(inputError)
+      return
+    }
+    //reference rooms/(roomID) document
+    const roomRef = doc(db, "rooms", roomID.toString());
+    //get doc asynchronously
+    const snapshot = await getDoc(roomRef);
+    //check if roomID document in rooms exists
+    if(roomID.length!=5 || roomID.length === 0) {
+      setJoinErrorMessage(roomInputError)
+      return
+    }
+    if(!snapshot.exists()) {
+      setJoinErrorMessage(roomNotExistsError)
+      return
+    }
+    console.log("Joining room " + roomID)
+    await setDoc(doc(db, 'rooms/'+roomID.toString()+'/users', name), {
+      name: name
+    });
     //TODO:
     //handle join room event
+    //include code to go to room webpage of roomID
   }
 
   async function createRoomClick() {
     let name = createSpaceName
-    if(name.length == 0) {
+    if(name.length === 0) {
         setCreateErrorMessage(inputError)
         return
     }
@@ -111,7 +138,7 @@ function App() {
     });
     //TODO:
     //include code to go to room webpage of roomID
-    console.log("Room " + roomID + " successfully created!")
+    console.log(name + " has successfully created room " + roomID)
   }
 
 /*
@@ -133,14 +160,14 @@ function App() {
       </div>
       {isFormVisible && (
         <div className="form-container">
-          <label>{createErrorMessage}</label>
+          <label className="createError">{createErrorMessage}</label>
           <input type= "text" placeholder="Enter your Name" value={createSpaceName} onChange = {handleCreateInputChange}/>
           <button className="create-button2" onClick={createRoomClick}> GO </button>
         </div>
       )}
       {isFormVisible2 && (
         <div className="form-container">
-          <label>{joinErrorMessage}</label>
+          <label className="joinError">{joinErrorMessage}</label>
           <input type= "text" placeholder="Enter your Name" value={joinSpaceName} onChange = {handleJoinInputChange}/>
           <input type= "text" placeholder="Enter Room ID" value={roomID} onChange = {handleInputIDChange}/>
           <div className="button-container"> <button className="join-button2" onClick={joinRoomClick}> GO</button> </div>
