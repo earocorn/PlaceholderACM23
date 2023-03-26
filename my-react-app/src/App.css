@@ -98,6 +98,8 @@
 
 .form-container {
   display: flex;
+  font-size: 30px;
+  color: red;
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
