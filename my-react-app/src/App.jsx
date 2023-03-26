@@ -24,7 +24,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app)
-
  //import "react-wheel-of-prizes/dist/index.css";
 
  function getWindowDimensions() {
@@ -68,6 +67,8 @@ function Room(props) {
   let [items, setItems] = useState([]);
   let [ourInput, setOurInput] = useState("");
   let [output, setOutput] = useState("");
+
+  const dimensions = useWindowDimensions();
 
   console.log(dimensions);
   if (props.userName === "") {
