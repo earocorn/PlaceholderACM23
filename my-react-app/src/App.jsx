@@ -105,7 +105,7 @@ function Room(props) {
           primaryColor="black"
           contrastColor="white"
           buttonText="Spin"
-          size={Math.min(300, dimensions.width / 3)}
+          size={Math.min(270, dimensions.width /2)}
           isOnlyOnce={false}
           upDuration={500}
           downDuration={600}

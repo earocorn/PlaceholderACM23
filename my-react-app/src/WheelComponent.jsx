@@ -245,18 +245,15 @@ const WheelComponent = ({
   
   return (
     
-        <div id="wheel" width="700" height="700" >
+        <div id="wheel" width="600" height="600" >
          <canvas
         id="canvas"
         
-        width={625}
-        height={625}
+        width={600}
+        height={600}
         style={{
           pointerEvents: isFinished && isOnlyOnce ? "none" : "auto",
-          alignContent: "center",
-          display:"flex",
-          alignItems:"center",
-          alignSelf:centerX
+        
         }}
          />
         </div>
